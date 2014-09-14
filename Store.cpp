@@ -2,7 +2,9 @@
 
 void Store::operate() {
 
+
 	Queue QueueSLine;
+	
 	QueueSLine.insert("Ioan");
 	QueueSLine.insert("Aura");
 	QueueSLine.insert("Banel");
