@@ -8,9 +8,16 @@ class Person {
 private:
 	Person* m_Next;
 	std::vector < Item* > m_Items;
+	int m_speed;
 public:
-	Person(void) : m_Next(0), m_Items(0) {}
-	Person(std::vector < Item* > Items) : m_Next(0), m_Items(Items) {}
+	//Default
+	Person(void) : m_Next(0), m_Items(0), m_speed(0) {}
+	//Person with Items
+	Person(std::vector < Item* > Items) : m_Next(0), m_Items(Items), m_speed(0) {}
+	//Person with Items and speed
+	Person(std::vector < Item* > Items, int speed) : m_Next(0), m_Items(Items), m_speed(speed) {}
+	//Person without Items but known speed
+	Person(int speed) : m_Next(0), m_Items(0), m_speed(speed) {}
 
 	//setters
 	void setNext(Person* Person) {
@@ -19,6 +26,9 @@ public:
 	//getters
 	Person* getNext() {
 		return m_Next;
+	}
+	std::vector < Item* > getItems() {
+		return m_Items;
 	}
 };
 
