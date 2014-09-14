@@ -1,14 +1,13 @@
-#include <iostream>
+/*
+* Queue Simulator
+* Author:Ioan George Istrate
+*/
 
-#include "Queue.h"
+#include "Store.h"
 
 int main() {
-	Queue QueueSLine;
-	QueueSLine.insert("Ioan");
-	QueueSLine.insert("Aura");
-	QueueSLine.insert("Banel");
-	QueueSLine.remove();
-	QueueSLine.printQueue();
-	system("pause");
+	Store WalMart;
+	WalMart.open();
+	WalMart.operate();
 	return 0;
 }
