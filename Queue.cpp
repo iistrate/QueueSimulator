@@ -30,17 +30,20 @@ void Queue::insert(std::string name) {
 		m_count++;
 	}
 }
-void Queue::remove() {
+int Queue::remove() {
+	int waitingTime = 0;
 	const int count = getCount();
 	if (count) {
 		//no persons in queue
 		if (count == 1) {
 			//1 person in queue
+			waitingTime = m_First->getWaitingTime();
 			delete m_First;
 		}
 		//more than 1 person in queue
 		else {
 			Person* temp = m_First;
+			waitingTime = m_First->getNext()->getWaitingTime();
 			m_First = m_First->getNext();
 			delete temp;
 		}
@@ -49,5 +52,17 @@ void Queue::remove() {
 	}
 	else {
 		std::cout << "No persons in queue!" << std::endl;
+	}
+	return waitingTime;
+}
+void Queue::increaseWaitingTime() {
+	const int count = getCount();
+	//if there's persons in the queue
+	if (count) {
+		Person* Navigator = m_First;
+		while (Navigator->getNext() != 0) {
+			Navigator->setWaitingTime();
+			Navigator = Navigator->getNext();
+		}
 	}
 }

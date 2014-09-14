@@ -15,9 +15,11 @@ public:
 	//print queue
 	void printQueue(void);
 	//add persons to queue
-	void insert(std::string name);
-	//remove first person in queue
-	void remove();
+	void insert(std::string name = "");
+	//remove first person in queue, return waiting time
+	int remove(void);
+	//increase time waited for each person in the queue
+	void increaseWaitingTime(void);
 
 	/*
 	*	Inline functions
