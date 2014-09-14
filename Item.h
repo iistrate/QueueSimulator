@@ -14,8 +14,11 @@ private:
 public:
 	Item(const int name) : m_name(name) {}
 
+	/*
+	*	Inline functions
+	*/
 	//getters
-	const int getItemName() {
+	const int getItemName(void) {
 		return m_name;
 	}
 };
