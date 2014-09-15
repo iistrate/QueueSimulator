@@ -21,13 +21,16 @@ private:
 	bool m_running;
 	const int m_config;
 	bool m_debug;
-	int m_customers;
 
 	//time
 	int m_ticks;
 	int m_maxTicks[4];
 	int m_longestWaiting;
-	float m_averageWait;
+
+	//average
+	double m_customers;
+	double m_totalWait;
+	double m_averageWait;
 
 	//composition
 	std::vector < Cashier* > m_Cashiers;
@@ -52,15 +55,8 @@ public:
 			close();
 		}
 	}
-	void averageTimes(int time, bool compute = false) {
-		static int counter = 1;
-		static int sum = 0;
-		sum += time;
-		counter++;
-		if (compute) {
-			m_averageWait = sum / counter;
-			std::cout << sum << " " << counter << std::endl;
-		}
+	void averageTimes() {
+		m_averageWait = m_totalWait / m_customers;
 	}
 };
 

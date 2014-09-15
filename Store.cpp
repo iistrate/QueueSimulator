@@ -56,18 +56,53 @@ void Store::operate() {
 				//config says one cashier one queue ergo access first queue
 				m_Queues[0]->insert();
 			}
-			//remove customers from queue 1 at a time; 1 cashier; return waiting time
+			//remove customers from
 			timeWaited = m_Queues[0]->remove();
 			m_longestWaiting = timeWaited > m_longestWaiting ? timeWaited : m_longestWaiting;
-			averageTimes(timeWaited, m_ticks+2 > maxTime ? true : false);
+			m_totalWait += timeWaited;
 			//customers served
 			m_customers++;
 			break;
 		case MULTIPLE_CASHIERS_MULTIPLE_LINES:
-
+			//distribute customers to multiple queues
+			for (int i = 0; i < readyToCheckout; i++) {
+				//get queue with shortest line add customers there
+				int queueIndex = 0;
+				int prevQueueSize = 9999;
+				for (int j = 0; j < queues; j++) {
+					int count = m_Queues[i]->getCount();
+					//iterate through queues, get sizes
+					if (prevQueueSize > count) {
+						prevQueueSize = count;
+						//get index
+						queueIndex = j;
+					}
+				}
+				m_Queues[queueIndex]->insert();
+			}
+			//remove customers here
+			for (int i = 0; i < cashiers; i++) {
+				timeWaited = m_Queues[i]->remove();
+				m_longestWaiting = timeWaited > m_longestWaiting ? timeWaited : m_longestWaiting;
+				m_totalWait += timeWaited;
+				//customers served
+				m_customers++;
+			}
 			break;
 		case MULTIPLE_CASHIERS_ONE_LINE:
-
+			//distribute customers to one queue
+			for (int i = 0; i < readyToCheckout; i++) {
+				//config says one cashier one queue ergo access first queue
+				m_Queues[0]->insert();
+			}
+			//remove customers here
+			for (int i = 0; i < cashiers; i++) {
+				timeWaited = m_Queues[0]->remove();
+				m_longestWaiting = timeWaited > m_longestWaiting ? timeWaited : m_longestWaiting;
+				m_totalWait += timeWaited;
+				//customers served
+				m_customers++;
+			}
 			break;
 		}		
 		if (m_debug) {
@@ -88,6 +123,7 @@ void Store::operate() {
 	std::cout << "Store served: " << m_customers << " customers" << std::endl;
 	std::cout << "Store still waiting to be served: " << m_Queues[0]->getCount() << " customers" << std::endl;
 	std::cout << "Longest time a customer had to wait: " << m_longestWaiting << " minutes" << std::endl;
+	averageTimes();
 	std::cout << "Average time a customer had to wait: " << m_averageWait << " minutes" << std::endl;
 	system("pause");
 

@@ -6,7 +6,7 @@
 #include "Store.h"
 
 int main() {
-	Store WalMart;
+	Store WalMart(Config::MULTIPLE_CASHIERS_ONE_LINE);
 	WalMart.open();
 	WalMart.operate();
 	return 0;
